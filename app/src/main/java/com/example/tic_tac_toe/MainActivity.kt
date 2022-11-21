@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.os.bundleOf
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,11 +30,13 @@ class MainActivity : AppCompatActivity() {
             if (firstPlayer == "" || secondPlayer == "") {
                 Toast.makeText(this, "შეიყვანეთ მოთამაშეების სახელები", Toast.LENGTH_SHORT).show()
             }else {
-                intent = Intent(this, game::class.java)
-                intent.putExtra("1Player", firstPlayer)
-                intent.putExtra("2Player", secondPlayer)
+
+                val intent = Intent(this, game::class.java)
+                intent.putExtra("firstPlayer", firstPlayer)
+                intent.putExtra("secondPlayer", secondPlayer)
                 startActivity(intent)
             }
+
 
 
 

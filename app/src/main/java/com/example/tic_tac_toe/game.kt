@@ -1,6 +1,7 @@
 package com.example.tic_tac_toe
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -28,25 +29,82 @@ class game : AppCompatActivity(), View.OnClickListener {
     private lateinit var score2: TextView
 
 
+
+
     private var activePLayer = 1
     private var firstPlayer = ArrayList<Int>()
     private var secondPlayer = ArrayList<Int>()
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_game)
 
         init()
         player_1 = findViewById(R.id.player_1)
         player_2 = findViewById(R.id.player_2)
 
+        player_1.text = intent.extras?.getString("firstPlayer")
+        player_2.text = intent.extras?.getString("secondPlayer")
+
+        reset.setOnClickListener() {
+            firstPlayer.clear()
+            secondPlayer.clear()
+            button1.text = ""
+            button2.text = ""
+            button3.text = ""
+            button4.text = ""
+            button5.text = ""
+            button6.text = ""
+            button7.text = ""
+            button8.text = ""
+            button9.text = ""
+            activePLayer = 1
+
+            button1.isEnabled = true
+            button2.isEnabled = true
+            button3.isEnabled = true
+            button4.isEnabled = true
+            button5.isEnabled = true
+            button6.isEnabled = true
+            button7.isEnabled = true
+            button8.isEnabled = true
+            button9.isEnabled = true
+
+            button1.setBackgroundColor(Color.rgb(2, 8,113))
+            button2.setBackgroundColor(Color.rgb(2, 8,113))
+            button3.setBackgroundColor(Color.rgb(2, 8,113))
+            button4.setBackgroundColor(Color.rgb(2, 8,113))
+            button5.setBackgroundColor(Color.rgb(2, 8,113))
+            button6.setBackgroundColor(Color.rgb(2, 8,113))
+            button7.setBackgroundColor(Color.rgb(2, 8,113))
+            button8.setBackgroundColor(Color.rgb(2, 8,113))
+            button9.setBackgroundColor(Color.rgb(2, 8,113))
+
+        }
+
+        finish.setOnClickListener() {
+
+            val player1 = player_1.text.toString()
+            val player2 = player_2.text.toString()
+
+            val intent = Intent(this, finish::class.java)
+            if(score1.text.toString() > score2.text.toString()) {
+                intent.putExtra("finish", player1)
+            }else if (score1.text.toString() < score2.text.toString()) {
+                intent.putExtra("finish", player2)
+            }
+            startActivity(intent)
 
 
-        player_1.text = intent?.extras?.getString ("1Player", )
-        player_2.text = intent?.extras?.getString("2Player")
+        }
+
+
+
+
 
     }
+
+
     private fun init(){
         button1 = findViewById(R.id.button1)
         button2 = findViewById(R.id.button2)
@@ -59,8 +117,6 @@ class game : AppCompatActivity(), View.OnClickListener {
         button9 = findViewById(R.id.button9)
         reset = findViewById(R.id.reset)
         finish = findViewById(R.id.finish)
-
-
 
         score1 = findViewById(R.id.score1)
         score2 = findViewById(R.id.score2)
@@ -79,6 +135,7 @@ class game : AppCompatActivity(), View.OnClickListener {
         finish.setOnClickListener(this)
 
     }
+
 
     override fun onClick(clickedView: View?) {
         if (clickedView is Button) {
@@ -112,15 +169,19 @@ class game : AppCompatActivity(), View.OnClickListener {
 
         }else if (activePLayer == 2){
             clickedView.text = "0"
-            clickedView.setBackgroundColor(Color.TRANSPARENT)
+            clickedView.setBackgroundColor(Color.BLUE)
             activePLayer = 1
             secondPlayer.add(buttonNumber)
         }
         clickedView.isEnabled = false
         check()
 
-    }
 
+
+
+    }
+    var player1score = 0
+    var player2score = 0
     private fun check() {
 
         var winnerPlayer = 0
@@ -179,14 +240,49 @@ class game : AppCompatActivity(), View.OnClickListener {
 
         if (winnerPlayer == 1) {
             Toast.makeText(this, "SLayy, X is a winner", Toast.LENGTH_SHORT).show()
+            player1score ++
+
+            button1.isEnabled = false
+            button2.isEnabled = false
+            button3.isEnabled = false
+            button4.isEnabled = false
+            button5.isEnabled = false
+            button6.isEnabled = false
+            button7.isEnabled = false
+            button8.isEnabled = false
+            button9.isEnabled = false
         }
         if (winnerPlayer == 2) {
             Toast.makeText(this, "SLayy, 0 is a winner", Toast.LENGTH_SHORT).show()
+            player2score ++
+
+            button1.isEnabled = false
+            button2.isEnabled = false
+            button3.isEnabled = false
+            button4.isEnabled = false
+            button5.isEnabled = false
+            button6.isEnabled = false
+            button7.isEnabled = false
+            button8.isEnabled = false
+            button9.isEnabled = false
         }
 
         if (firstPlayer.size + secondPlayer.size == 9 && winnerPlayer == 0 ) {
             Toast.makeText(this, "gaimarjva megobrobam", Toast.LENGTH_SHORT).show()
+            button1.isEnabled = false
+            button2.isEnabled = false
+            button3.isEnabled = false
+            button4.isEnabled = false
+            button5.isEnabled = false
+            button6.isEnabled = false
+            button7.isEnabled = false
+            button8.isEnabled = false
+            button9.isEnabled = false
         }
+        score1.text = player1score.toString()
+        score2.text = player2score.toString()
+
+
     }
 
 
