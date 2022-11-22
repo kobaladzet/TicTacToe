@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".finish">
+    tools:context=".finish"
+    android:background="@color/purple">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="THE WINNER IS:"
             android:textColor="@color/teal_200"
-            android:textSize="50sp" />
+            android:textSize="40sp" />
         <TextView
             android:id="@+id/winner"
             android:layout_width="wrap_content"
@@ -28,7 +29,14 @@
             android:text="winner"
             android:textSize="50sp"
             android:gravity="center"
-            android:textColor="@color/purple"/>
+            android:textColor="@color/white"/>
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="play again"
+            android:layout_marginTop="50dp"
+            android:backgroundTint="@color/teal_200"/>
 
     </LinearLayout>
 

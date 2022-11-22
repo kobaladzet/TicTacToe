@@ -22,14 +22,11 @@ class game : AppCompatActivity(), View.OnClickListener {
     private lateinit var button8:Button
     private lateinit var button9:Button
     private lateinit var reset: Button
-    private lateinit var finish: Button
+    private lateinit var finishButton: Button
     private lateinit var player_1: TextView
     private lateinit var player_2: TextView
     private lateinit var score1: TextView
     private lateinit var score2: TextView
-
-
-
 
     private var activePLayer = 1
     private var firstPlayer = ArrayList<Int>()
@@ -79,31 +76,25 @@ class game : AppCompatActivity(), View.OnClickListener {
             button7.setBackgroundColor(Color.rgb(2, 8,113))
             button8.setBackgroundColor(Color.rgb(2, 8,113))
             button9.setBackgroundColor(Color.rgb(2, 8,113))
-
         }
 
-        finish.setOnClickListener() {
+        finishButton.setOnClickListener() {
 
             val player1 = player_1.text.toString()
             val player2 = player_2.text.toString()
+            val bothAreWinners = "both are winners"
 
             val intent = Intent(this, finish::class.java)
-            if(score1.text.toString() > score2.text.toString()) {
+            if(score1.text.toString().toInt() > score2.text.toString().toInt()) {
                 intent.putExtra("finish", player1)
-            }else if (score1.text.toString() < score2.text.toString()) {
+            }else if (score1.text.toString().toInt() < score2.text.toString().toInt()) {
                 intent.putExtra("finish", player2)
+            }else if (score1.text.toString().toInt() == score2.text.toString().toInt()) {
+                intent.putExtra("finish", bothAreWinners)
             }
             startActivity(intent)
-
-
         }
-
-
-
-
-
     }
-
 
     private fun init(){
         button1 = findViewById(R.id.button1)
@@ -116,11 +107,9 @@ class game : AppCompatActivity(), View.OnClickListener {
         button8 = findViewById(R.id.button8)
         button9 = findViewById(R.id.button9)
         reset = findViewById(R.id.reset)
-        finish = findViewById(R.id.finish)
-
+        finishButton = findViewById(R.id.finish)
         score1 = findViewById(R.id.score1)
         score2 = findViewById(R.id.score2)
-
 
         button1.setOnClickListener(this)
         button2.setOnClickListener(this)
@@ -132,8 +121,7 @@ class game : AppCompatActivity(), View.OnClickListener {
         button8.setOnClickListener(this)
         button9.setOnClickListener(this)
         reset.setOnClickListener(this)
-        finish.setOnClickListener(this)
-
+        finishButton.setOnClickListener(this)
     }
 
 
@@ -151,7 +139,6 @@ class game : AppCompatActivity(), View.OnClickListener {
                 R.id.button7 -> buttonNumber = 7
                 R.id.button8 -> buttonNumber = 8
                 R.id.button9 -> buttonNumber = 9
-
             }
 
             if (buttonNumber != 0){
@@ -175,15 +162,10 @@ class game : AppCompatActivity(), View.OnClickListener {
         }
         clickedView.isEnabled = false
         check()
-
-
-
-
     }
     var player1score = 0
     var player2score = 0
     private fun check() {
-
         var winnerPlayer = 0
 
         if (firstPlayer.contains(1) && firstPlayer.contains(2) && firstPlayer.contains(3)) {
@@ -192,14 +174,12 @@ class game : AppCompatActivity(), View.OnClickListener {
         if(secondPlayer.contains(1) && secondPlayer.contains(2) && secondPlayer.contains(3)) {
             winnerPlayer = 2
         }
-
         if (firstPlayer.contains(4) && firstPlayer.contains(5) && firstPlayer.contains(6)) {
             winnerPlayer = 1
         }
         if(secondPlayer.contains(4) && secondPlayer.contains(5) && secondPlayer.contains(6)) {
             winnerPlayer = 2
         }
-
         if (firstPlayer.contains(7) && firstPlayer.contains(8) && firstPlayer.contains(9)) {
             winnerPlayer = 1
         }
@@ -212,7 +192,6 @@ class game : AppCompatActivity(), View.OnClickListener {
         if(secondPlayer.contains(1) && secondPlayer.contains(5) && secondPlayer.contains(9)) {
             winnerPlayer = 2
         }
-
         if (firstPlayer.contains(1) && firstPlayer.contains(4) && firstPlayer.contains(7)) {
             winnerPlayer = 1
         }
@@ -237,9 +216,8 @@ class game : AppCompatActivity(), View.OnClickListener {
         if(secondPlayer.contains(3) && secondPlayer.contains(5) && secondPlayer.contains(7)) {
             winnerPlayer = 2
         }
-
         if (winnerPlayer == 1) {
-            Toast.makeText(this, "SLayy, X is a winner", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "X is a winner", Toast.LENGTH_SHORT).show()
             player1score ++
 
             button1.isEnabled = false
@@ -253,7 +231,7 @@ class game : AppCompatActivity(), View.OnClickListener {
             button9.isEnabled = false
         }
         if (winnerPlayer == 2) {
-            Toast.makeText(this, "SLayy, 0 is a winner", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "0 is a winner", Toast.LENGTH_SHORT).show()
             player2score ++
 
             button1.isEnabled = false
@@ -281,9 +259,5 @@ class game : AppCompatActivity(), View.OnClickListener {
         }
         score1.text = player1score.toString()
         score2.text = player2score.toString()
-
-
     }
-
-
 }
